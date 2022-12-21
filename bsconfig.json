@@ -1,0 +1,24 @@
+{
+  "name": "fe-onboarding",
+  "reason": { "react-jsx": 3 },
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
+    }
+  ],
+  "package-specs": [
+    {
+      "module": "es6",
+      "in-source": true
+    }
+  ],
+  "suffix": ".mjs",
+  "ppx-flags": ["rescript-relay/ppx"],
+  "bs-dependencies": [
+    "@rescript/react",
+    "rescript-relay",
+    "bs-fetch",
+    "@ryyppy/rescript-promise"
+  ]
+}

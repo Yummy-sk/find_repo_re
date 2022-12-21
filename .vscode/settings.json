@@ -1,0 +1,10 @@
+{
+  "rescript.settings.allowBuiltInFormatter": true,
+  "rescript.settings.autoRunCodeAnalysis": false,
+  "rescript.settings.signatureHelp.enable": true,
+  "rescript.settings.binaryPath": ".yarn/unplugged/rescript-npm-10.0.1-c064c63c72/node_modules/rescript",
+  "files.associations": {
+    "*.env.local": "env",
+  },
+  "css.customData": [".vscode/css_data.json"]
+}

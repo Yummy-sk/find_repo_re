@@ -1,0 +1,58 @@
+{
+  "name": "fe-onboarding",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "yarn relay && concurrently -c 'auto' 'yarn:dev:*'",
+    "dev:res": "rescript build -w",
+    "dev:next": "next dev",
+    "dev:relay": "rescript-relay-compiler --watch",
+    "relay": "rescript-relay-compiler",
+    "build:res": "rescript build",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "introspection": "sh -c 'source .env.local && get-graphql-schema -h \"Authorization=bearer $NEXT_PUBLIC_ACCESS_TOKEN\" https://api.github.com/graphql > schema.graphql'"
+  },
+  "dependencies": {
+    "@ryyppy/rescript-promise": "^2.1.0",
+    "bs-fetch": "^0.6.2",
+    "next": "13.0.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-relay": "14.1.0",
+    "relay-runtime": "14.1.0",
+    "rescript-relay": "^1.0.2"
+  },
+  "devDependencies": {
+    "@rescript/react": "^0.10.3",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
+    "get-graphql-schema": "^2.1.2",
+    "next-transpile-modules": "^10.0.0",
+    "postcss": "^8.4.19",
+    "rescript": "^10.0.1",
+    "tailwindcss": "^3.2.4"
+  },
+  "dependenciesMeta": {
+    "@rescript/react@0.10.3": {
+      "unplugged": true
+    },
+    "@ryyppy/rescript-promise@2.1.0": {
+      "unplugged": true
+    },
+    "bs-fetch@0.6.2": {
+      "unplugged": true
+    },
+    "rescript@10.0.1": {
+      "unplugged": true
+    },
+    "rescript-next@12.0.1": {
+      "unplugged": true
+    },
+    "rescript-relay@1.0.2": {
+      "unplugged": true
+    }
+  },
+  "packageManager": "yarn@3.3.0"
+}
