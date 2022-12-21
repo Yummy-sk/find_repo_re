@@ -1,7 +1,13 @@
-# FE Onboarding
+# Find repository
 
-## 할 일들
+A project to find a Github repository using GraphQL and react-relay.
 
-- [x] 깃헙 GraphQL 인증 정보 얻기
-- [x] schema 받아오기
-- [ ] rescript-relay 사용해보기
+# Installation
+
+```bash
+// your github token
+echo "NEXT_PUBLIC_GITHUB_PAT={GITHUB_PAT}" > .env.local
+
+yarn install
+yarn dev:res & yarn dev & yarn realy --watch
+```

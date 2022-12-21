@@ -42,9 +42,12 @@ let make = (~query) => {
       ->React.array}
     </ul>
     {switch (hasNext, isLoadingNext) {
+    // 다음 것이 있고 로딩 중이면 로딩 중 표시
     | (true, true) => <div> {"Loading..."->React.string} </div>
+    // 다음 것이 있고 로딩 중이 아니면 버튼 표시
     | (true, false) =>
       <button onClick={_ => loadNext(~count, ())->ignore}> {"Load more"->React.string} </button>
+    // 다음 것이 없으면 없다고 표시
     | (false, _) => <div> {"No more results"->React.string} </div>
     }}
   </>
