@@ -1,6 +1,6 @@
 module Query = %relay(`
-  query ListContainerQuery($query: String!, $count: Int!, $cursor: String) {
-    ...ListFragment @arguments(query: $query, count: $count, cursor: $cursor)
+  query ListContainerQuery($query: String!, $count: Int!) {
+    ...ListFragment @arguments(query: $query, count: $count)
   }
 `)
 
