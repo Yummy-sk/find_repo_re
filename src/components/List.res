@@ -35,7 +35,7 @@ let make = (~query) => {
         <li key={cursor}>
           {switch node {
           | Some(node) => <Card query={node.fragmentRefs} />
-          | None => <div />
+          | None => React.null
           }}
         </li>
       )

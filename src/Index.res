@@ -14,7 +14,7 @@ let default = () => {
       {value
       ->Some
       ->Belt.Option.flatMap(checkStringIsEmpty)
-      ->Belt.Option.mapWithDefault(<div> {"No value"->React.string} </div>, str =>
+      ->Belt.Option.mapWithDefault(<div> {"No value"->React.string} </div>, _ =>
         <ListContainer value={value} />
       )}
     </React.Suspense>
