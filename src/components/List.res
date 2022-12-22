@@ -23,20 +23,24 @@ module Fragment = %relay(`
 let make = (~query) => {
   let count = 5
   let {data, hasNext, isLoadingNext, loadNext} = Fragment.usePagination(query)
+
   let edges =
     data.search.edges
     ->Belt.Option.getWithDefault([])
-    ->Belt.Array.keepMap(Belt.Option.map(_, edge => (edge.node, edge.cursor)))
+    ->Belt.Array.map(edge => edge->Belt.Option.getWithDefault({cursor: "", node: None}))
+    ->Belt.Array.keepMap(({node, cursor}) =>
+      switch node {
+      | Some(node) => Some((node, cursor))
+      | None => None
+      }
+    )
 
   <>
     <ul className="w-96 mt-5">
       {edges
       ->Belt.Array.map(((node, cursor)) =>
         <li key={cursor}>
-          {switch node {
-          | Some(node) => <Card query={node.fragmentRefs} />
-          | None => React.null
-          }}
+          <Card query={node.fragmentRefs} />
         </li>
       )
       ->React.array}
