@@ -1,7 +1,5 @@
 @react.component
-let make = (~value, ~onChange) => {
-  let onSubmit = e => e->ReactEvent.Form.preventDefault
-
+let make = (~value, ~onSubmit, ~onChange) => {
   <form className="w-fit mt-5" onSubmit={onSubmit}>
     <label htmlFor="large-input" className="block mb-3 text-lg text-center">
       {"Let's find repository"->React.string}

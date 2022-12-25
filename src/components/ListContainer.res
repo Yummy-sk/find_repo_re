@@ -5,8 +5,8 @@ module Query = %relay(`
 `)
 
 @react.component
-let make = (~value) => {
-  let {fragmentRefs} = Query.use(~variables={query: value, count: 5}, ())
+let make = (~keyWord) => {
+  let {fragmentRefs} = Query.use(~variables={query: keyWord, count: 5}, ())
 
   <List query={fragmentRefs} />
 }

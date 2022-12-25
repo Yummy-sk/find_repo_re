@@ -1,9 +1,11 @@
+type state = Loading | LoadMore | NoResult
+
 module Fragment = %relay(`
   fragment ListFragment on Query
   @refetchable(queryName: "ListQuery")
   @argumentDefinitions(
     query: { type: "String!" }
-    count: { type: "Int", defaultValue: 10 }
+    count: { type: "Int", defaultValue: 5 }
     cursor: { type: "String" }
   ) {
     search(query: $query, first: $count, type: REPOSITORY, after: $cursor)
@@ -24,16 +26,25 @@ let make = (~query) => {
   let count = 5
   let {data, hasNext, isLoadingNext, loadNext} = Fragment.usePagination(query)
 
+  let map2 = (xs, ys, f) => xs->Belt.Option.flatMap(x => ys->Belt.Option.map(y => f(x, y)))
+
   let edges =
     data.search.edges
     ->Belt.Option.getWithDefault([])
-    ->Belt.Array.map(edge => edge->Belt.Option.getWithDefault({cursor: "", node: None}))
-    ->Belt.Array.keepMap(({node, cursor}) =>
-      switch node {
-      | Some(node) => Some((node, cursor))
-      | None => None
-      }
+    ->Belt.Array.reduce(Some([]), (acc, edge) =>
+      map2(acc, edge, (acc, edge) => acc->Belt.Array.concat([edge]))
     )
+    ->Belt.Option.mapWithDefault([], edges =>
+      edges->Belt.Array.keepMap(({node, cursor}) => node->Belt.Option.map(node' => (node', cursor)))
+    )
+
+  let getStatus = (hasNext, isLoadingNext) => {
+    switch (hasNext, isLoadingNext) {
+    | (true, true) => Loading
+    | (true, false) => LoadMore
+    | (false, _) => NoResult
+    }
+  }
 
   <>
     <ul className="w-96 mt-5">
@@ -45,14 +56,11 @@ let make = (~query) => {
       )
       ->React.array}
     </ul>
-    {switch (hasNext, isLoadingNext) {
-    // 다음 것이 있고 로딩 중이면 로딩 중 표시
-    | (true, true) => <div> {"Loading..."->React.string} </div>
-    // 다음 것이 있고 로딩 중이 아니면 버튼 표시
-    | (true, false) =>
+    {switch getStatus(hasNext, isLoadingNext) {
+    | Loading => <div> {"Loading..."->React.string} </div>
+    | LoadMore =>
       <button onClick={_ => loadNext(~count, ())->ignore}> {"Load more"->React.string} </button>
-    // 다음 것이 없으면 없다고 표시
-    | (false, _) => <div> {"No more results"->React.string} </div>
+    | NoResult => <div> {"No more results"->React.string} </div>
     }}
   </>
 }
